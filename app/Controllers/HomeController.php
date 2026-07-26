@@ -13,6 +13,10 @@ class HomeController {
         $categories  = $cm->getAll();
 
         // Flash sale: products with active discount
+        // Set $flashSaleEnd to a Unix timestamp (e.g. strtotime('2026-12-31 23:59:59'))
+        // or leave empty string '' to hide the countdown timer.
+        $flashSaleEnd = '';
+
         $db = Database::getInstance();
         $saleProducts = $db->fetchAll(
             "SELECT p.*, c.slug AS category_slug, c.name AS category_name,

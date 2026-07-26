@@ -295,6 +295,7 @@ foreach($saleProducts??array() as $_sp){
     <!-- Header bar -->
     <div class="fs-hdr">
       <span class="fs-title"><i class="fa-solid fa-fire-flame-curved"></i> FLASH SALE</span>
+      <?php if(!empty($flashSaleEnd)): ?>
       <div class="fs-cd">
         <div class="fs-cd-b"><span class="fs-cd-n" id="fcd-h">00</span><span class="fs-cd-l">Giờ</span></div>
         <span class="fs-cd-d">:</span>
@@ -302,6 +303,7 @@ foreach($saleProducts??array() as $_sp){
         <span class="fs-cd-d">:</span>
         <div class="fs-cd-b"><span class="fs-cd-n" id="fcd-s">00</span><span class="fs-cd-l">Giây</span></div>
       </div>
+      <?php endif; ?>
       <a href="<?= APP_URL ?>/products" class="fs-more-btn">Xem thêm <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
     </div>
 
@@ -482,18 +484,22 @@ foreach($_secDefs as $_sd):
 <?php endif; ?>
 
 <script>
-// ── Countdown to midnight ──────────────────────────────────────────
+// ── Countdown flash sale ───────────────────────────────────────────
 (function(){
+  var endTs = <?= !empty($flashSaleEnd) ? (int)$flashSaleEnd * 1000 : 'null' ?>;
+  if (!endTs) return; // end_time rỗng → không chạy timer
+  var timer;
   function tick(){
-    var now=new Date(), end=new Date(); end.setHours(23,59,59,0);
-    var d=Math.max(0,Math.floor((end-now)/1000));
-    var h=Math.floor(d/3600); d%=3600; var m=Math.floor(d/60),s=d%60;
+    var rem = Math.max(0, Math.floor((endTs - Date.now()) / 1000));
+    if (rem === 0) { clearInterval(timer); }
+    var h = Math.floor(rem / 3600); rem %= 3600;
+    var m = Math.floor(rem / 60),   s = rem % 60;
     var eh=document.getElementById('fcd-h'),em=document.getElementById('fcd-m'),es=document.getElementById('fcd-s');
     if(eh)eh.textContent=String(h).padStart(2,'0');
     if(em)em.textContent=String(m).padStart(2,'0');
     if(es)es.textContent=String(s).padStart(2,'0');
   }
-  setInterval(tick,1000); tick();
+  timer = setInterval(tick, 1000); tick();
 })();
 
 // ── Horizontal scroll ─────────────────────────────────────────────

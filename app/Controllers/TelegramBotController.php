@@ -1653,7 +1653,7 @@ Chỉ trả về JSON, không giải thích.';
 
     // ── Internal API caller (reuses existing ApiController endpoints) ──
     private function callApi($path, $body = array()) {
-        $base   = rtrim(defined('APP_URL') ? APP_URL : 'http://localhost/tuanhuy_computer', '/');
+        $base   = rtrim(APP_URL, '/');
         $cookie = session_name() . '=' . session_id();
         $ch     = curl_init($base . $path);
         curl_setopt_array($ch, array(

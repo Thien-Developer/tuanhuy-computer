@@ -174,10 +174,10 @@
   <div class="reveal">
     <div style="font-size:.75rem;font-weight:700;color:var(--gray-400);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.85rem">Kết nối với chúng tôi</div>
     <div class="social-row">
-      <a href="#" class="social-btn social-fb"><i class="fa-brands fa-facebook" style="color:#1877f2"></i>Facebook</a>
-      <a href="#" class="social-btn social-zalo"><i class="fa-solid fa-comment-dots" style="color:#0068ff"></i>Zalo</a>
-      <a href="#" class="social-btn social-yt"><i class="fa-brands fa-youtube" style="color:#ff0000"></i>YouTube</a>
-      <a href="#" class="social-btn social-tiktok"><i class="fa-brands fa-tiktok"></i>TikTok</a>
+      <a href="https://facebook.com/tuanhuycmp" target="_blank" rel="noopener noreferrer" class="social-btn social-fb"><i class="fa-brands fa-facebook" style="color:#1877f2"></i>Facebook</a>
+      <a href="https://zalo.me/tuanhuycmp" target="_blank" rel="noopener noreferrer" class="social-btn social-zalo"><i class="fa-solid fa-comment-dots" style="color:#0068ff"></i>Zalo</a>
+      <a href="https://youtube.com/@tuanhuycmp" target="_blank" rel="noopener noreferrer" class="social-btn social-yt"><i class="fa-brands fa-youtube" style="color:#ff0000"></i>YouTube</a>
+      <a href="https://tiktok.com/@tuanhuycmp" target="_blank" rel="noopener noreferrer" class="social-btn social-tiktok"><i class="fa-brands fa-tiktok"></i>TikTok</a>
     </div>
   </div>
 

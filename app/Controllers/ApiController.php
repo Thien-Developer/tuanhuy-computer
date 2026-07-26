@@ -14,14 +14,18 @@ class ApiController {
         $b = json_decode(file_get_contents('php://input'), true) ?? array();
 
         if ($action === 'login') {
-            $em = trim($b['email'] ?? '');
+            $em = strtolower(trim($b['email'] ?? ''));
             $pw = $b['password'] ?? '';
             if (!$em || !$pw) { echo json_encode(array('success'=>false,'message'=>'Vui lòng nhập đầy đủ')); return; }
             $um = new UserModel();
             $u  = $um->findByEmail($em);
-            $passOk = $u && (password_verify($pw,$u['password']) || $pw === $u['password']);
+            $storedPw  = $u ? $u['password'] : '';
+            $pwInfo    = $u ? password_get_info($storedPw) : array('algo'=>0);
+            $isPlain   = $u && !$pwInfo['algo'] && $pw === rtrim($storedPw, "\r\n ");
+            $passOk    = $u && (password_verify($pw, $storedPw) || $isPlain);
             if (!$passOk) { echo json_encode(array('success'=>false,'message'=>'Email hoặc mật khẩu không đúng')); return; }
             if (!$u['is_active']) { echo json_encode(array('success'=>false,'message'=>'Tài khoản đã bị khóa')); return; }
+            if ($isPlain) { $um->updatePassword($u['id'], password_hash($pw, PASSWORD_BCRYPT)); }
             $_SESSION['user_id']    = $u['id'];
             $_SESSION['user_name']  = $u['fullname'];
             $_SESSION['user_email'] = $u['email'];
@@ -1238,6 +1242,9 @@ category_id brand_id từ danh sách trên. Specs 6-10 thông số tiếng Việ
         if ($action === 'get-assets') {
             $json = __DIR__ . '/../../assets/images/approved.json';
             $data = file_exists($json) ? (json_decode(file_get_contents($json), true) ?: array()) : array();
+            foreach ($data as &$_a) {
+                if (!empty($_a['filename'])) $_a['url'] = APP_URL . '/assets/images/' . $_a['filename'];
+            } unset($_a);
             echo json_encode(array('ok'=>true,'assets'=>$data));
             return;
         }

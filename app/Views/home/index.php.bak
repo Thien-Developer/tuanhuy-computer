@@ -29,7 +29,7 @@ foreach(array(0,1,2) as $_si){
 // Side banner defaults
 $_defSide = array(
     array('img'=>APP_URL.'/assets/images/monitor.png','label'=>'Màn hình','title'=>'Gaming 4K<br>144Hz+',             'url'=>APP_URL.'/products/man-hinh'),
-    array('img'=>APP_URL.'/assets/images/mouse.png',  'label'=>'Phụ kiện', 'title'=>'Chuột &amp; Bàn phím<br>Cơ Gaming','url'=>APP_URL.'/products/chuot'),
+    array('img'=>APP_URL.'/assets/images/mouse.png',  'label'=>'Phụ kiện', 'title'=>'Bàn phím<br>Cơ Gaming','url'=>APP_URL.'/products/chuot'),
 );
 $_sideBans = array();
 foreach(array(0,1) as $_si){
@@ -95,7 +95,7 @@ foreach($saleProducts??array() as $_sp){
 .fs-card:hover .fs-img-wrap img{transform:scale(1.06)}
 .fs-disc{position:absolute;top:6px;left:6px;background:var(--red);color:#fff;font-size:.62rem;font-weight:800;padding:2px 6px;border-radius:4px}
 .fs-card-body{padding:.55rem .65rem .65rem}
-.fs-name{font-size:.75rem;font-weight:600;color:#111;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.3rem;min-height:2em}
+.fs-name{font-size:.75rem;font-weight:600;color:#111;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.3rem}
 .fs-price{color:var(--red);font-weight:900;font-size:.9rem}
 .fs-old{color:#aaa;font-size:.72rem;text-decoration:line-through;margin-left:.3rem}
 .fs-sold-wrap{margin-top:.4rem}
@@ -295,6 +295,7 @@ foreach($saleProducts??array() as $_sp){
     <!-- Header bar -->
     <div class="fs-hdr">
       <span class="fs-title"><i class="fa-solid fa-fire-flame-curved"></i> FLASH SALE</span>
+      <?php if(!empty($flashSaleEnd)): ?>
       <div class="fs-cd">
         <div class="fs-cd-b"><span class="fs-cd-n" id="fcd-h">00</span><span class="fs-cd-l">Giờ</span></div>
         <span class="fs-cd-d">:</span>
@@ -302,6 +303,7 @@ foreach($saleProducts??array() as $_sp){
         <span class="fs-cd-d">:</span>
         <div class="fs-cd-b"><span class="fs-cd-n" id="fcd-s">00</span><span class="fs-cd-l">Giây</span></div>
       </div>
+      <?php endif; ?>
       <a href="<?= APP_URL ?>/products" class="fs-more-btn">Xem thêm <i class="fa-solid fa-arrow-right" style="font-size:.7rem"></i></a>
     </div>
 
@@ -354,27 +356,6 @@ foreach($saleProducts??array() as $_sp){
 </div>
 <?php endif; ?>
 
-<!-- ── CATEGORY GRID ── -->
-<div class="bg-g reveal">
-  <div class="sec-wrap">
-    <div class="sec-hd">
-      <div class="sec-bar"></div>
-      <h2 class="sec-ttl">Danh mục sản phẩm</h2>
-      <a href="<?= APP_URL ?>/products" class="sec-more">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-    <?php $catIcons=array('may-tinh-pc'=>'fa-desktop','laptop'=>'fa-laptop','man-hinh'=>'fa-tv','chuot'=>'fa-computer-mouse','ban-phim'=>'fa-keyboard','ram'=>'fa-memory','cpu'=>'fa-microchip','card-do-hoa'=>'fa-hard-drive','ssd-o-cung'=>'fa-hdd','mainboard'=>'fa-server','phu-kien'=>'fa-headphones'); ?>
-    <div class="cg-grid">
-      <?php foreach($categories as $cat): ?>
-      <a href="<?= APP_URL ?>/products/<?= $cat['slug'] ?>" class="cg-item" title="<?= htmlspecialchars($cat['name']) ?>">
-        <div class="cg-ico"><i class="fa-solid <?= isset($catIcons[$cat['slug']])?$catIcons[$cat['slug']]:'fa-box' ?>"></i></div>
-        <div class="cg-nm"><?= htmlspecialchars($cat['name']) ?></div>
-        <div class="cg-cnt"><?= $cat['product_count'] ?> SP</div>
-      </a>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</div>
-
 <!-- ── PER-CATEGORY PRODUCT SECTIONS ── -->
 <?php
 $_secDefs = array(
@@ -420,40 +401,6 @@ foreach($_secDefs as $_sd):
   </div>
 </div>
 <?php endforeach; ?>
-
-<!-- ── BANNER ROW ── -->
-<div class="bg-g reveal">
-  <div class="sec-wrap">
-    <div class="ban-row">
-      <a href="<?= APP_URL ?>/products/may-tinh-pc" class="ban-card">
-        <?php if($_gpcImg): ?>
-        <div class="ban-bg" style="background-image:url('<?= htmlspecialchars($_gpcImg) ?>')"></div>
-        <?php else: ?>
-        <div class="ban-bg" style="background:linear-gradient(135deg,#0d0000,#1c0202)"></div>
-        <?php endif; ?>
-        <div class="ban-fog"></div>
-        <div class="ban-txt">
-          <div class="ban-label"><i class="fa-solid fa-desktop"></i> PC GAMING</div>
-          <div class="ban-title">RTX 4090 — Sức mạnh<br>không giới hạn</div>
-          <span class="ban-cta"><i class="fa-solid fa-arrow-right"></i> Khám phá ngay</span>
-        </div>
-      </a>
-      <a href="<?= APP_URL ?>/products/laptop" class="ban-card">
-        <?php if($_lapImg): ?>
-        <div class="ban-bg" style="background-image:url('<?= htmlspecialchars($_lapImg) ?>')"></div>
-        <?php else: ?>
-        <div class="ban-bg" style="background:linear-gradient(135deg,#00060d,#01152a)"></div>
-        <?php endif; ?>
-        <div class="ban-fog"></div>
-        <div class="ban-txt">
-          <div class="ban-label"><i class="fa-solid fa-laptop"></i> LAPTOP</div>
-          <div class="ban-title">Mỏng nhẹ, hiệu năng<br>vượt trội 2024</div>
-          <span class="ban-cta"><i class="fa-solid fa-arrow-right"></i> Xem ngay</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
 
 <!-- ── PROMOTIONAL 2×2 GRID ── -->
 <div class="bg-w reveal">
@@ -537,18 +484,22 @@ foreach($_secDefs as $_sd):
 <?php endif; ?>
 
 <script>
-// ── Countdown to midnight ──────────────────────────────────────────
+// ── Countdown flash sale ───────────────────────────────────────────
 (function(){
+  var endTs = <?= !empty($flashSaleEnd) ? (int)$flashSaleEnd * 1000 : 'null' ?>;
+  if (!endTs) return; // end_time rỗng → không chạy timer
+  var timer;
   function tick(){
-    var now=new Date(), end=new Date(); end.setHours(23,59,59,0);
-    var d=Math.max(0,Math.floor((end-now)/1000));
-    var h=Math.floor(d/3600); d%=3600; var m=Math.floor(d/60),s=d%60;
+    var rem = Math.max(0, Math.floor((endTs - Date.now()) / 1000));
+    if (rem === 0) { clearInterval(timer); }
+    var h = Math.floor(rem / 3600); rem %= 3600;
+    var m = Math.floor(rem / 60),   s = rem % 60;
     var eh=document.getElementById('fcd-h'),em=document.getElementById('fcd-m'),es=document.getElementById('fcd-s');
     if(eh)eh.textContent=String(h).padStart(2,'0');
     if(em)em.textContent=String(m).padStart(2,'0');
     if(es)es.textContent=String(s).padStart(2,'0');
   }
-  setInterval(tick,1000); tick();
+  timer = setInterval(tick, 1000); tick();
 })();
 
 // ── Horizontal scroll ─────────────────────────────────────────────

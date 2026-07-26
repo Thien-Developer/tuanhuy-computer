@@ -5,6 +5,23 @@ config/database.php
 .env.*
 .env.local
 
+# Claude Code local settings
+.claude/settings.local.json
+
+# Private keys & certificates
+*.pem
+*.key
+*.crt
+
+# Database dumps
+*.sql
+database/*.sql
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
 # Storage
 storage/
 uploads/

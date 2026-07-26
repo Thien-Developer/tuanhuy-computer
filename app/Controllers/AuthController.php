@@ -19,7 +19,7 @@ class AuthController {
         }
         $error='';
         if($_SERVER['REQUEST_METHOD']==='POST'){
-            $email=trim(isset($_POST['email'])?$_POST['email']:'');
+            $email=strtolower(trim(isset($_POST['email'])?$_POST['email']:''));
             $password=isset($_POST['password'])?$_POST['password']:'';
             if(!$email||!$password){$error='Vui lòng nhập đầy đủ.';}
             elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){$error='Email không hợp lệ.';}

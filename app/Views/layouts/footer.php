@@ -18,12 +18,12 @@
         <p style="color:#777;font-size:.8rem;line-height:1.75;margin-bottom:1.2rem">Chuyên PC, Laptop, linh kiện máy tính chính hãng. Cam kết giá tốt nhất TP.HCM. Bảo hành tận nơi, giao hàng toàn quốc.</p>
         <div style="display:flex;gap:.4rem">
           <?php foreach(array(
-            array('fa-facebook-f', '#1877f2'),
-            array('fa-youtube',    '#ff0000'),
-            array('fa-tiktok',     '#ffffff'),
-            array('fa-telegram',   '#0088cc')
+            array('fa-facebook-f', '#1877f2', 'https://facebook.com/tuanhuycmp'),
+            array('fa-youtube',    '#ff0000', 'https://youtube.com/@tuanhuycmp'),
+            array('fa-tiktok',     '#ffffff', 'https://tiktok.com/@tuanhuycmp'),
+            array('fa-telegram',   '#0088cc', 'https://t.me/tuanhuycmp')
           ) as $s): ?>
-          <a href="#" style="width:32px;height:32px;border:1px solid #222;border-radius:50%;display:flex;align-items:center;justify-content:center;color:<?= $s[1] ?>;font-size:.78rem;transition:background .18s,border-color .18s" onmouseover="this.style.background='<?= $s[1] ?>33';this.style.borderColor='<?= $s[1] ?>66'" onmouseout="this.style.background='transparent';this.style.borderColor='#222'">
+          <a href="<?= $s[2] ?>" target="_blank" rel="noopener noreferrer" style="width:32px;height:32px;border:1px solid #222;border-radius:50%;display:flex;align-items:center;justify-content:center;color:<?= $s[1] ?>;font-size:.78rem;transition:background .18s,border-color .18s" onmouseover="this.style.background='<?= $s[1] ?>33';this.style.borderColor='<?= $s[1] ?>66'" onmouseout="this.style.background='transparent';this.style.borderColor='#222'">
             <i class="fa-brands <?= $s[0] ?>"></i>
           </a>
           <?php endforeach; ?>
@@ -55,10 +55,10 @@
           'Chính sách vận chuyển',
           'Câu hỏi thường gặp'
         ) as $s): ?>
-        <a href="#" style="display:flex;align-items:center;gap:.35rem;color:#666;font-size:.79rem;padding:.22rem 0;transition:color .18s,transform .18s" onmouseover="this.style.color='#fff';this.style.transform='translateX(3px)'" onmouseout="this.style.color='#666';this.style.transform='translateX(0)'">
+        <span style="display:flex;align-items:center;gap:.35rem;color:#666;font-size:.79rem;padding:.22rem 0;cursor:default">
           <i class="fa-solid fa-angle-right" style="color:var(--red,#E30000);font-size:.6rem;flex-shrink:0"></i>
           <?= $s ?>
-        </a>
+        </span>
         <?php endforeach; ?>
       </div>
 
