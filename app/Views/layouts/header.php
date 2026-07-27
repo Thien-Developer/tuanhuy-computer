@@ -47,13 +47,25 @@ a{text-decoration:none}
 ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
 
 /* ── LOADER ── */
-#pg-ld{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .5s,visibility .5s}
-#pg-ld.out{opacity:0;visibility:hidden}
-.ld-txt{font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:-0.5px;margin-bottom:14px}
-.ld-txt em{color:var(--red);font-style:normal}
-.ld-bar{width:160px;height:3px;background:#222;border-radius:99px;overflow:hidden}
-.ld-fill{height:100%;width:0;background:var(--red);border-radius:99px;animation:fill .7s .1s ease forwards}
-@keyframes fill{to{width:100%}}
+#pg-ld {
+  position: fixed; inset: 0;
+  background: var(--black);
+  z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+#pg-ld.out { opacity: 0; visibility: hidden; }
+.ld-logo {
+  width: 56px; height: 56px; margin: 0 auto 18px;
+  border: 3px solid rgba(255,255,255,.12);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+.ld-txt { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -0.5px; text-align: center; opacity: 0; animation: fadeIn .5s .15s ease forwards; }
+.ld-txt em { color: var(--red); font-style: normal; }
+@keyframes spin { to { transform: rotate(360deg) } }
+@keyframes fadeIn { to { opacity: 1 } }
 
 /* ── TOAST ── */
 #toast-wrap{position:fixed;bottom:20px;right:20px;z-index:8999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
@@ -201,8 +213,8 @@ a{text-decoration:none}
 <!-- LOADER -->
 <div id="pg-ld">
   <div style="text-align:center">
+    <div class="ld-logo"></div>
     <div class="ld-txt">TUẤN HUY <em>COMPUTER</em></div>
-    <div class="ld-bar"><div class="ld-fill"></div></div>
   </div>
 </div>
 
@@ -395,8 +407,11 @@ a{text-decoration:none}
 
 <script>
 // ── Loader
-window.addEventListener('load',function(){
-  setTimeout(function(){var l=document.getElementById('pg-ld');if(l){l.classList.add('out');setTimeout(function(){l.remove()},500);}},350);
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var l = document.getElementById('pg-ld');
+    if (l) { l.classList.add('out'); setTimeout(function() { l.remove(); }, 400); }
+  }, 200);
 });
 
 // ── UI toggles
