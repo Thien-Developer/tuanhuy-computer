@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=E53935&height=200&section=header&text=Tu%E1%BA%A5n%20Huy%20Computer&fontSize=50&fontColor=FFFFFF&fontAlignY=38&animation=fadeIn" width="100%"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a1a,100:E53935&height=180&section=header&text=Tu%E1%BA%A5n%20Huy%20Computer&fontSize=42&fontColor=fff&animation=fadeIn&fontAlignY=40" width="100%"/>
 </p>
 
 <p align="center">
@@ -310,5 +310,5 @@ Chỉ Admin mới thực hiện được:
 ---
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=E53935&height=120&section=footer&animation=fadeIn" width="100%"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a1a,100:E53935&height=100&section=footer&animation=fadeIn" width="100%"/>
 </p>
