@@ -10,7 +10,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/PHP-8.1-777BB4?style=flat-square&logo=php&logoColor=white" alt="PHP"/>
   <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL"/>
-  <img src="https://img.shields.io/badge/License-Proprietary-lightgrey?style=flat-square" alt="License"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License"/>
   <img src="https://img.shields.io/badge/Status-In%20Development-orange?style=flat-square" alt="Status"/>
 </p>
 
