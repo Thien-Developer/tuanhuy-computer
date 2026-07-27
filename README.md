@@ -1,54 +1,84 @@
-# Tuấn Huy Computer
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=E53935&height=200&section=header&text=Tu%E1%BA%A5n%20Huy%20Computer&fontSize=50&fontColor=FFFFFF&fontAlignY=38&animation=fadeIn" width="100%"/>
+</p>
 
-![PHP](https://img.shields.io/badge/PHP-8.1-777BB4?logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MariaDB-MySQL-4479A1?logo=mysql&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazonaws&logoColor=white)
-![Apache](https://img.shields.io/badge/Apache-httpd-D22128?logo=apache&logoColor=white)
+<p align="center">
+  Website thương mại điện tử bán linh kiện máy tính, xây dựng bằng PHP thuần và MySQL — không dùng framework, không Composer, không npm.<br/>
+  Tích hợp AI hỗ trợ nghiệp vụ, đăng nhập Google OAuth, xây dựng cấu hình PC tùy chỉnh và hệ thống quản trị phân quyền nhiều cấp.
+</p>
 
-Website thương mại điện tử bán linh kiện máy tính, xây dựng bằng PHP thuần + MySQL. Không dùng framework, không Composer, không npm.
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.1-777BB4?style=flat-square&logo=php&logoColor=white" alt="PHP"/>
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL"/>
+  <img src="https://img.shields.io/badge/License-Proprietary-lightgrey?style=flat-square" alt="License"/>
+  <img src="https://img.shields.io/badge/Status-In%20Development-orange?style=flat-square" alt="Status"/>
+</p>
 
-**Local:** `http://localhost/tuanhuy_computer`  
-**Production:** Apache trên EC2 (Ubuntu)
-
----
-
-## Tính năng
-
-**Khách hàng**
-- Duyệt sản phẩm theo danh mục, tìm kiếm, lọc theo giá / thương hiệu / trạng thái
-- Giỏ hàng, mã giảm giá, đặt hàng, thanh toán chuyển khoản / MoMo
-- Theo dõi đơn hàng, hủy đơn, đánh giá sản phẩm
-- Đăng nhập / đăng ký, Google OAuth
-
-**Admin / Staff**
-- Quản lý sản phẩm, danh mục, đơn hàng, khách hàng, mã giảm giá, banner
-- AI tạo tên & mô tả sản phẩm (Groq), tìm ảnh (SerpApi / Bing / Pexels / Pixabay), xóa nền ảnh (browser-side ESM)
-- Audit log toàn bộ thao tác
-- Thông báo Telegram theo thời gian thực
-- Phân quyền 3 cấp: Admin / Manager / Staff
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=php,mysql,js,css,html,git,github,apache" alt="Tech stack"/>
+</p>
 
 ---
 
-## Tech Stack
+## 📸 Demo
 
-| Thành phần | Chi tiết |
-|---|---|
-| Backend | PHP 7.4+ / 8.1, không framework |
-| Database | MySQL 5.7+ / 8.0 |
-| Web server | Apache + `mod_rewrite` (AppServ / XAMPP local, Apache2 production) |
-| AI | Groq API — `llama-3.2-11b-vision-preview` |
-| Image search | SerpApi → Bing → Pexels → Pixabay → Google fallback |
-| Background removal | `@imgly/background-removal` (ESM từ esm.sh, chạy trên browser) |
-| Notification | Telegram Bot API |
-| Email | SMTP Gmail |
-| Auth bên thứ 3 | Google OAuth 2.0 |
-| Payment UI | Techcombank VietQR, MoMo deeplink |
+| Trang chủ | Đăng nhập |
+|:---:|:---:|
+| ![Trang chủ](assets/images/screenshot-home.png) | ![Đăng nhập](assets/images/screenshot-login.png) |
+
+| Chi tiết sản phẩm | Trang quản trị |
+|:---:|:---:|
+| ![Sản phẩm](assets/images/screenshot-product.png) | ![Admin](assets/images/screenshot-admin.png) |
+
+**Demo trực tuyến:** _(sẽ cập nhật khi có domain chính thức)_
 
 ---
 
-## Cài đặt Local (AppServ / XAMPP)
+## ✨ Tính năng nổi bật
+
+|  | Tính năng | Mô tả |
+|:---:|---|---|
+| 🛒 | Giỏ hàng & Thanh toán | Thêm giỏ hàng, áp mã giảm giá, đặt hàng, thanh toán chuyển khoản Techcombank VietQR hoặc MoMo deeplink |
+| 🔐 | Đăng nhập Google OAuth | Đăng ký / đăng nhập truyền thống hoặc qua Google OAuth 2.0 |
+| 🖥️ | Xây dựng PC tùy chỉnh | Công cụ build cấu hình PC theo linh kiện, kiểm tra tương thích |
+| 🤖 | Trợ lý AI | Groq API sinh tên/mô tả sản phẩm, tìm ảnh, xóa nền ảnh, phát hiện trùng lặp, chatbot hỗ trợ nghiệp vụ |
+| 🛠️ | Trang quản trị | Quản lý sản phẩm, danh mục, đơn hàng, khách hàng, tồn kho, banner, thống kê doanh thu |
+| 📨 | Thông báo Telegram | Bot Telegram gửi thông báo đơn hàng/sự kiện theo thời gian thực, xử lý qua cron/daemon |
+| ⚡ | Tối ưu hiệu năng | Nén gzip và cache trình duyệt cấu hình qua `.htaccess` |
+| 🔁 | CI/CD tự động | GitHub Actions tự động deploy lên server khi push vào `main` |
+
+---
+
+## 🛠️ Công nghệ sử dụng
+
+**Backend**
+- PHP 7.4+ / 8.1 — thuần, không framework
+- MySQL 5.7+ / 8.0 (MariaDB tương thích)
+- Apache + `mod_rewrite`
+
+**Frontend**
+- HTML5, CSS3, JavaScript thuần (Vanilla JS)
+- Không dùng framework/thư viện UI ngoài
+
+**Tích hợp**
+- Groq API (`llama-3.2-11b-vision-preview`) — AI sinh nội dung & phân tích ảnh
+- `@imgly/background-removal` (ESM qua esm.sh) — xóa nền ảnh phía trình duyệt
+- Tìm ảnh: SerpApi → Bing → Pexels → Pixabay → Google (fallback chain)
+- Google OAuth 2.0 — đăng nhập bên thứ ba
+- Telegram Bot API — thông báo real-time
+- SMTP Gmail — gửi email
+- Techcombank VietQR, MoMo deeplink — thanh toán
+
+**DevOps**
+- GitHub Actions — CI/CD tự động deploy
+- Apache trên EC2 (Ubuntu) — production hosting
+
+---
+
+## 🚀 Cài đặt local
 
 ### Yêu cầu
+
 - AppServ 2.6+ hoặc XAMPP với PHP 7.4+ và MySQL
 - `mod_rewrite` bật trong Apache
 
@@ -56,7 +86,7 @@ Website thương mại điện tử bán linh kiện máy tính, xây dựng b�
 
 ```bash
 # 1. Clone vào web root
-git clone https://github.com/hangthin/tuanhuy-computer.git C:/AppServ/www/tuanhuy_computer
+git clone https://github.com/Thien-Developer/tuanhuy-computer.git C:/AppServ/www/tuanhuy_computer
 
 # 2. Tạo database
 # Mở phpMyAdmin → tạo DB tên "mpc" → import
@@ -75,11 +105,7 @@ mkdir -p uploads/products storage
 
 Truy cập: `http://localhost/tuanhuy_computer`
 
----
-
-## Cấu hình
-
-### `.env.local` (local overrides — không commit)
+### Biến môi trường — `.env.local` (local, không commit)
 
 ```env
 APP_URL=http://localhost/tuanhuy_computer
@@ -96,7 +122,7 @@ TELEGRAM_BOT_TOKEN=123456:ABC...
 TELEGRAM_ADMIN_CHAT=7329986368
 ```
 
-### `config/app.php` — hằng số toàn cục
+### Hằng số toàn cục — `config/app.php`
 
 | Hằng số | Mô tả |
 |---|---|
@@ -105,8 +131,8 @@ TELEGRAM_ADMIN_CHAT=7329986368
 | `TELEGRAM_BOT_TOKEN` | Token Telegram bot |
 | `TELEGRAM_ADMIN_CHAT` | Chat ID nhận thông báo |
 | `TELEGRAM_CRON_SECRET` | Token bảo vệ endpoint cron |
-| `MAIL_USER / MAIL_PASS` | Gmail + App Password |
-| `GOOGLE_CLIENT_ID/SECRET` | Google OAuth credentials |
+| `MAIL_USER` / `MAIL_PASS` | Gmail + App Password |
+| `GOOGLE_CLIENT_ID` / `SECRET` | Google OAuth credentials |
 | `SERPAPI_KEY` | Tìm ảnh qua SerpApi |
 | `BING_SEARCH_KEY` | Bing Image Search |
 | `REMOVEBG_KEY` | remove.bg API (fallback server-side) |
@@ -125,50 +151,17 @@ TELEGRAM_ADMIN_CHAT=7329986368
 'password' => '',
 ```
 
----
+### Tài khoản Admin mặc định (dữ liệu seed local)
 
-## Deploy lên EC2 (Ubuntu + Apache2)
+| Role | Email | Mật khẩu |
+|---|---|---|
+| Admin | admin@tuanhuycomputer.com | `admin123` |
 
-### Lần đầu
-
-```bash
-# Trên máy local — copy project lên server
-scp -i key.pem -r . ec2-user@98.92.254.137:/var/www/html/tuanhuy_computer
-
-# Trên server
-cd /var/www/html/tuanhuy_computer
-bash deploy/setup.sh          # cài Apache, PHP, MySQL
-bash deploy/deploy.sh         # config, import DB, set permissions
-bash deploy/ssl.sh your-domain.com   # Let's Encrypt (cần domain trỏ về IP)
-```
-
-### Cập nhật
-
-```bash
-# Từ máy local
-bash deploy/sync_server.sh    # rsync lên server (cần key.pem)
-
-# Hoặc trực tiếp trên server
-cd /var/www/html/tuanhuy_computer
-git pull origin main
-systemctl reload apache2
-```
-
-### Biến môi trường trên server
-
-Tạo `/etc/apache2/sites-available/tuanhuy_computer.conf` và thêm:
-
-```apache
-SetEnv APP_URL "https://your-domain.com"
-SetEnv AI_API_KEY "gsk_..."
-SetEnv TELEGRAM_BOT_TOKEN "..."
-SetEnv MAIL_USER "..."
-SetEnv MAIL_PASS "..."
-```
+> **Quan trọng:** Đổi mật khẩu ngay sau khi cài đặt/deploy lần đầu tại `/admin/staff`.
 
 ---
 
-## Cấu trúc thư mục
+## 📁 Cấu trúc dự án
 
 ```
 tuanhuy_computer/
@@ -200,13 +193,13 @@ tuanhuy_computer/
 ├── storage/                # Cache, log, JSON state (không commit)
 ├── database/
 │   └── migrations.sql      # Schema đầy đủ + migrations gộp
-├── deploy/                 # Scripts deploy lên EC2
+├── deploy/                 # Scripts deploy lên server
 └── scripts/                # Tiện ích Python (fix data, remove bg)
 ```
 
 ---
 
-## Routing
+## 🧭 Routing
 
 Mọi request đều qua `index.php` (via `.htaccess`).
 
@@ -221,22 +214,19 @@ Mọi request đều qua `index.php` (via `.htaccess`).
 
 ---
 
-## Đăng nhập Admin
+## 🔌 API nội bộ
 
-1. Truy cập `http://localhost/tuanhuy_computer/auth/login` (hoặc nhấn **Đăng nhập** trên header)
-2. Đăng nhập bằng tài khoản Admin:
+Tất cả endpoint dưới `/api/{action}`. Request body: JSON. Response luôn HTTP 200:
 
-| Role | Email | Mật khẩu |
-|---|---|---|
-| Admin | admin@tuanhuycomputer.com | `admin123` |
+```json
+{ "success": true, "...": "..." }
+```
 
-3. Sau khi đăng nhập, vào trang quản trị tại: `/admin`
-
-> **Quan trọng:** Đổi mật khẩu ngay sau khi deploy lần đầu tại `/admin/staff`.
+Nhóm endpoint: `auth`, `cart`, `coupon`, `review`, `ai` (generate, save-image, search-image, remove-bg, add-watermark, check-duplicate, save-product, upload-extra-images, reorder-images, update-extra-image).
 
 ---
 
-## Các trang Admin
+## 🖥️ Các trang Admin
 
 | URL | Chức năng |
 |---|---|
@@ -259,7 +249,7 @@ Mọi request đều qua `index.php` (via `.htaccess`).
 
 ---
 
-## Phân quyền
+## 🔐 Phân quyền
 
 | Role | Giá trị | Quyền chi tiết |
 |---|---|---|
@@ -294,30 +284,18 @@ Chỉ Admin mới thực hiện được:
 4. Chọn **Vai trò**: Manager hoặc Staff
 5. Nhấn **Lưu**
 
-Để khóa / mở khóa tài khoản: nhấn nút toggle trên danh sách nhân sự.  
+Để khóa / mở khóa tài khoản: nhấn nút toggle trên danh sách nhân sự.
 Để đặt lại mật khẩu: nhấn **Reset mật khẩu** trong form sửa.
 
 > Không thể thay đổi vai trò hoặc tự khóa tài khoản đang đăng nhập.
 
 ---
 
-## API nội bộ
-
-Tất cả endpoint dưới `/api/{action}`. Request body: JSON. Response luôn HTTP 200:
-
-```json
-{ "success": true/false, ... }
-```
-
-Nhóm endpoint: `auth`, `cart`, `coupon`, `review`, `ai` (generate, save-image, search-image, remove-bg, add-watermark, check-duplicate, save-product, upload-extra-images, reorder-images, update-extra-image).
-
----
-
-## Bảo mật
+## 🛡️ Bảo mật
 
 - Luôn dùng parameterized queries — không bao giờ nội suy input vào SQL
 - `config/`, `deploy/`, `database/`, `storage/` bị chặn bởi `.htaccess` trên production
-- `key.pem` và `.env.local` có trong `.gitignore`, không commit lên repo
+- File cấu hình chứa thông tin nhạy cảm (`.env.local`, khóa SSH...) nằm trong `.gitignore`, không commit lên repo
 - `display_errors` tắt hoàn toàn trên production
 - Mật khẩu hash bằng `password_hash()` / `password_verify()`
 - Session name tùy chỉnh: `TH_SESS`
@@ -325,52 +303,12 @@ Nhóm endpoint: `auth`, `cart`, `coupon`, `review`, `ai` (generate, save-image, 
 
 ---
 
-## 🌐 Server & Deployment Info
+## 👤 Tác giả
 
-| Thông tin | Giá trị |
-|---|---|
-| Live URL | http://98.92.254.137 |
-| Cloud | AWS EC2 |
-| OS | Amazon Linux 2023 |
-| IP | 98.92.254.137 |
-| Web server | Apache httpd |
-| PHP timezone | Asia/Ho_Chi_Minh |
-| Database | MariaDB |
-| DB name | `mpc` |
-| DB password | *(xem `/root/db_credentials.txt` trên server)* |
-| Deploy path | `/var/www/html/` |
-| SSH | `ssh -i key.pem ec2-user@98.92.254.137` |
-
-### Cloudflare Tunnel (Telegram Webhook)
-
-Tunnel dùng Cloudflare trycloudflare — URL thay đổi mỗi lần restart server.
-
-**Lấy URL tunnel mới sau khi restart:**
-
-```bash
-sudo journalctl -u cloudflared --no-pager | grep trycloudflare | tail -3
-```
-
-**Đặt lại webhook cho Telegram bot:**
-
-```bash
-curl "https://api.telegram.org/bot{TOKEN}/setWebhook?url=https://{TUNNEL_URL}/telegram/webhook"
-```
-
-### Checklist sau khi restart server
-
-1. Lấy tunnel URL mới (lệnh `journalctl` ở trên)
-2. Đặt lại Telegram webhook với URL mới
-3. Kiểm tra Apache đang chạy:
-
-```bash
-sudo systemctl status httpd
-# Nếu chưa chạy:
-sudo systemctl start httpd
-```
+**Thiên** — [github.com/Thien-Developer](https://github.com/Thien-Developer)
 
 ---
 
-## Giấy phép
-
-Dự án nội bộ — Tuấn Huy Computer.
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=E53935&height=120&section=footer&animation=fadeIn" width="100%"/>
+</p>
