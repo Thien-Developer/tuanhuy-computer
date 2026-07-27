@@ -20,20 +20,6 @@
 
 ---
 
-## 📸 Demo
-
-| Trang chủ | Đăng nhập |
-|:---:|:---:|
-| ![Trang chủ](assets/images/screenshot-home.png) | ![Đăng nhập](assets/images/screenshot-login.png) |
-
-| Chi tiết sản phẩm | Trang quản trị |
-|:---:|:---:|
-| ![Sản phẩm](assets/images/screenshot-product.png) | ![Admin](assets/images/screenshot-admin.png) |
-
-**Demo trực tuyến:** _(sẽ cập nhật khi có domain chính thức)_
-
----
-
 ## ✨ Tính năng nổi bật
 
 |  | Tính năng | Mô tả |
