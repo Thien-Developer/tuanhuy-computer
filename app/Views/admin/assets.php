@@ -289,6 +289,11 @@ $_bfContent = $_bfExists ? file_get_contents($_bfFile) : '— file chưa tồn t
   <div class="am-preview" id="bprev-<?= $bslot ?>" style="height:100px">
     <?php if($hasB): ?><img src="<?= $bUrl ?>" alt="" style="width:100%;height:100%;object-fit:cover"><?php else: ?><i class="fa-solid <?= $bs['icon'] ?> ph"></i><?php endif; ?>
   </div>
+  <div id="bbgrm-wrap-<?= $bslot ?>" style="<?= $hasB?'':'display:none' ?>">
+    <button onclick="removeBanBg('<?= $bslot ?>')" class="btn-g" style="width:100%;border-radius:0;border-top:1px solid #1e1e1e;font-size:.73rem;padding:.4rem;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:all .2s" onmouseover="this.style.background='#1a0a1a';this.style.color='#e879f9'" onmouseout="this.style.background='';this.style.color=''">
+      <i class="fa-solid fa-scissors"></i> Tách nền PNG (AI)
+    </button>
+  </div>
   <div class="am-body">
     <div class="am-tabs">
       <button class="ai-tab on" id="btab-<?= $bslot ?>-u" onclick="sBanTab('<?= $bslot ?>','u')"><i class="fa-solid fa-upload" style="margin-right:3px"></i>Upload</button>
@@ -769,6 +774,14 @@ document.addEventListener('click', function(e) {
 // ── Banner management ─────────────────────────────────────────────
 var BS = { 'main-banner-1':{b64:'',mime:'image/jpeg',url:'',file:null}, 'main-banner-2':{b64:'',mime:'image/jpeg',url:'',file:null}, 'main-banner-3':{b64:'',mime:'image/jpeg',url:'',file:null}, 'side-banner-1':{b64:'',mime:'image/jpeg',url:'',file:null}, 'side-banner-2':{b64:'',mime:'image/jpeg',url:'',file:null} };
 var activeBanCard = null;
+var BANNER_CUR = <?php
+  $bannerCurMap = [];
+  foreach ($bannerSlots as $bs) {
+      $bc = $bs['group']==='main' ? ($bjMain[$bs['idx']]??[]) : ($bjSide[$bs['idx']]??[]);
+      $bannerCurMap[$bs['slot']] = $bc['img'] ?? '';
+  }
+  echo json_encode($bannerCurMap);
+?>;
 
 function sBanTab(slot, tab) {
   ['u','l','c'].forEach(function(t){
@@ -953,6 +966,9 @@ async function saveBanner(slot, metaOnly) {
       document.getElementById('bcard-'+slot).classList.add('done');
       document.getElementById('bappbtn-'+slot).style.display = 'none';
       document.getElementById('brmvbtn-'+slot).style.display = 'block';
+      BANNER_CUR[slot] = previewUrl;
+      var bgWrap = document.getElementById('bbgrm-wrap-'+slot);
+      if (bgWrap) bgWrap.style.display = 'block';
     }
     // Show written path for confirmation
     if (fnEl) {
@@ -993,12 +1009,23 @@ function toast(msg,type){
 }
 
 // ── Background removal (@imgly/background-removal — runs in browser, no API key) ──
-var _bgKey = null, _bgBlob = null;
+var _bgKey = null, _bgBlob = null, _bgIsBanner = false;
 
 function removeBg(key) {
-  _bgKey = key; _bgBlob = null;
+  _bgKey = key; _bgBlob = null; _bgIsBanner = false;
   var url = (approved[key]||{}).url;
   if (!url) { toast('Chưa có ảnh đã duyệt', 'err'); return; }
+  _openBgModal(url);
+}
+
+function removeBanBg(slot) {
+  _bgKey = slot; _bgBlob = null; _bgIsBanner = true;
+  var url = BANNER_CUR[slot];
+  if (!url) { toast('Chưa có ảnh banner', 'err'); return; }
+  _openBgModal(url);
+}
+
+function _openBgModal(url) {
   var modal = document.getElementById('bgModal');
   document.getElementById('bgBefore').src = url;
   document.getElementById('bgAfterWrap').style.background = 'repeating-conic-gradient(#2a2a2a 0% 25%,#1a1a1a 0% 50%) 0 0 / 16px 16px';
@@ -1060,7 +1087,7 @@ async function _runRemoveBg(url) {
 
 function closeBgModal() {
   document.getElementById('bgModal').style.display = 'none';
-  _bgBlob = null; _bgKey = null;
+  _bgBlob = null; _bgKey = null; _bgIsBanner = false;
 }
 
 async function saveBgResult() {
@@ -1071,7 +1098,12 @@ async function saveBgResult() {
   var reader = new FileReader();
   reader.onload = async function(e) {
     try {
-      await saveApproved(_bgKey, { component: _bgKey, image_b64: e.target.result, image_mime: 'image/png' });
+      if (_bgIsBanner) {
+        BS[_bgKey].b64 = e.target.result; BS[_bgKey].mime = 'image/png'; BS[_bgKey].url = ''; BS[_bgKey].file = null;
+        await saveBanner(_bgKey);
+      } else {
+        await saveApproved(_bgKey, { component: _bgKey, image_b64: e.target.result, image_mime: 'image/png' });
+      }
       closeBgModal();
     } catch(err) { toast('Lỗi lưu: '+err.message, 'err'); }
     btn.disabled = false;

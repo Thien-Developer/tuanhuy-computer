@@ -1197,20 +1197,26 @@ class AdminController {
                 echo json_encode(['ok'=>false,'message'=>'Định dạng không hợp lệ']); exit;
             }
             $filename = $slot . '.' . $ext;
-            move_uploaded_file($f['tmp_name'], $bannerDir . $filename);
+            if (!move_uploaded_file($f['tmp_name'], $bannerDir . $filename)) {
+                echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
+            }
             $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
         } elseif (!empty($_POST['image_b64'])) {
             $mime  = $_POST['image_mime'] ?? 'image/jpeg';
             $ext   = ($mime === 'image/png') ? 'png' : (($mime === 'image/webp') ? 'webp' : 'jpg');
             $data  = base64_decode(preg_replace('#^data:[^;]+;base64,#', '', $_POST['image_b64']));
             $filename = $slot . '.' . $ext;
-            file_put_contents($bannerDir . $filename, $data);
+            if (file_put_contents($bannerDir . $filename, $data) === false) {
+                echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
+            }
             $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
         } elseif (!empty($_POST['url'])) {
             $data = @file_get_contents($_POST['url']);
             if ($data) {
                 $filename = $slot . '.jpg';
-                file_put_contents($bannerDir . $filename, $data);
+                if (file_put_contents($bannerDir . $filename, $data) === false) {
+                    echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
+                }
                 $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
             } else { $savedUrl = $_POST['url']; }
         } else {

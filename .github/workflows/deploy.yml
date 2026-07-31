@@ -21,3 +21,4 @@ jobs:
             chmod -R 777 storage uploads/products
             chmod 777 app/Views/home
             chmod 666 app/Views/home/index.php app/Views/home/index.php.bak 2>/dev/null || true
+            chmod -R 777 assets/images
