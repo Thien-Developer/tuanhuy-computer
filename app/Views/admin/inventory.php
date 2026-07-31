@@ -303,4 +303,4 @@ document.getElementById('bulk-submit').addEventListener('click', function() {
     });
 });
 </script>
-<?php require_once __DIR__.'./layout_bottom.php'; ?>
+<?php require_once __DIR__.'/layout_bottom.php'; ?>
