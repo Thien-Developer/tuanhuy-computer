@@ -7,6 +7,7 @@ config/database.php
 
 # Claude Code local settings
 .claude/settings.local.json
+CLAUDE.md
 
 # Private keys & certificates
 *.pem
