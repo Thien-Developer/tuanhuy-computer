@@ -177,7 +177,19 @@ async function imsSearch(){
 </div>
 
 <script>
-window.addEventListener('load',function(){var l=document.getElementById('pg-loader');if(l){l.classList.add('hidden');setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},500);}});
+(function(){
+  var l=document.getElementById('pg-loader');
+  if(!l)return;
+  var hidden=false;
+  function hide(){
+    if(hidden||!l)return;
+    hidden=true;
+    l.classList.add('hidden');
+    setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},500);
+  }
+  window.addEventListener('load',hide);
+  setTimeout(hide,4000);
+})();
 function showToast(msg,type){type=type||'ok';var c=document.getElementById('toast-c');var t=document.createElement('div');t.className='toast '+type;t.innerHTML=(type==='ok'?'✅':'❌')+' '+msg;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';},3000);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3300);}
 function showCenterNotif(icon, title, sub, ms){
   ms = ms || 2800;
