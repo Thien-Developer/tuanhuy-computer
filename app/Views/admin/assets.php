@@ -1,7 +1,6 @@
 <?php require_once __DIR__.'/layout_top.php'; ?>
 <?php
 $approved  = $approved  ?? [];
-$hasBackup = $hasBackup ?? false;
 
 $components = [
     ['key'=>'hero-banner','label'=>'Hero Banner',  'icon'=>'fa-image',          'desc'=>'Ảnh nền hero section',       'query'=>'PC gaming RGB setup dark wallpaper 4K'],
@@ -13,10 +12,6 @@ $components = [
     ['key'=>'headset',    'label'=>'Tai nghe',     'icon'=>'fa-headphones',     'desc'=>'Tai nghe gaming RGB',         'query'=>'gaming headset RGB headphones dark background'],
     ['key'=>'ram',        'label'=>'RAM',          'icon'=>'fa-memory',         'desc'=>'RAM DDR5 RGB',                'query'=>'DDR5 RGB RAM memory stick dark background'],
 ];
-$total         = count($components);
-$approvedCount = 0;
-foreach ($components as $c) { if (!empty($approved[$c['key']]['url'])) $approvedCount++; }
-$pct = $total > 0 ? round($approvedCount / $total * 100) : 0;
 ?>
 <style>
 /* ── Tabs (identical to ai_generator) ──────────────────────────── */
@@ -52,51 +47,8 @@ $pct = $total > 0 ? round($approvedCount / $total * 100) : 0;
 .ac-item{padding:.38rem .75rem;cursor:pointer;font-size:.77rem;color:#ccc;border-bottom:1px solid #252525;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s}
 .ac-item:hover{background:#2a2a2a;color:#fff}
 .ac-item:last-child{border-bottom:none}
-/* ── Progress ───────────────────────────────────────────────────── */
-.prog-wrap{background:#1a1a1a;border:1px solid #222;border-radius:12px;padding:1rem 1.35rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.5rem}
-.prog-track{flex:1;height:7px;background:#111;border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,#16a34a,#22c55e);border-radius:99px;transition:width .5s ease}
-.act-bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.25rem}
-/* ── Demo overlay ───────────────────────────────────────────────── */
-#demoOvl{position:fixed;inset:0;background:#000;z-index:9999;display:none;flex-direction:column}
-#demoOvl.show{display:flex}
-.demo-x{position:absolute;top:1rem;right:1rem;z-index:10;background:rgba(255,255,255,.08);border:none;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.demo-x:hover{background:rgba(255,255,255,.2)}
-#demoCanvas{flex:1;position:relative;overflow:hidden}
-.d-phase{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none}
-.d-phase.cur{opacity:1;pointer-events:auto}
-.d-bg{position:absolute;inset:0;background-size:cover;background-position:center}
-.d-fog{position:absolute;inset:0;background:rgba(0,0,0,.58)}
-.d-cnt{position:relative;z-index:2;text-align:center;color:#fff;padding:2rem;max-width:700px}
-.d-cnt h2{font-size:clamp(1.6rem,4vw,3rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.5rem}
-.demo-bar{padding:.8rem 2rem;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:1rem;flex-shrink:0}
-.demo-bar input[type=range]{flex:1;accent-color:var(--red);cursor:pointer}
-.ph-dots{display:flex;gap:.4rem;justify-content:center;margin-top:.9rem}
-.ph-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .2s,transform .2s}
-.ph-dot.on{background:var(--red);transform:scale(1.3)}
 </style>
 
-<!-- ── Progress ────────────────────────────────────────────────── -->
-<div class="prog-wrap">
-  <div>
-    <div style="font-size:.68rem;color:#555;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.2rem">Tiến độ duyệt ảnh</div>
-    <div style="font-size:1.3rem;font-weight:900;color:#fff">
-      <span id="jsCount"><?= $approvedCount ?></span>
-      <span style="color:#333;font-size:.88rem"> / <?= $total ?></span>
-      <span style="font-size:.75rem;color:#22c55e;margin-left:.4rem">ảnh đã duyệt</span>
-    </div>
-  </div>
-  <div class="prog-track"><div class="prog-fill" id="jsProg" style="width:<?= $pct ?>%"></div></div>
-  <div style="font-size:1.05rem;font-weight:900;color:#22c55e;min-width:42px;text-align:right" id="jsPct"><?= $pct ?>%</div>
-</div>
-
-<!-- ── Action bar ───────────────────────────────────────────────── -->
-<div class="act-bar">
-  <button class="btn-r" id="btnDemo"     onclick="openDemo()"    <?= $approvedCount===0?'disabled':'' ?>><i class="fa-solid fa-play"></i> Chạy Demo</button>
-  <button class="btn-r" id="btnDeploy"   onclick="deployHome()"  <?= $approvedCount===0?'disabled':'' ?> style="background:#7c3aed"><i class="fa-solid fa-rocket"></i> Duyệt &amp; Áp dụng vào Trang Chủ</button>
-  <button class="btn-g" id="btnRollback" onclick="rollbackHome()" style="display:<?= $hasBackup?'inline-flex':'none' ?>"><i class="fa-solid fa-rotate-left"></i> Khôi phục phiên bản cũ</button>
-  <span id="depStatus" style="font-size:.76rem;color:#555"></span>
-</div>
 
 <!-- ── Asset cards ──────────────────────────────────────────────── -->
 <div class="am-grid">
@@ -369,20 +321,6 @@ $_bfContent = $_bfExists ? file_get_contents($_bfFile) : '— file chưa tồn t
 <?php endforeach; ?>
 </div>
 
-<!-- ── Demo fullscreen overlay ─────────────────────────────────── -->
-<div id="demoOvl">
-  <button class="demo-x" onclick="closeDemo()"><i class="fa-solid fa-xmark"></i></button>
-  <div id="demoCanvas"></div>
-  <div class="demo-bar">
-    <span style="color:#777;font-size:.73rem;white-space:nowrap"><i class="fa-solid fa-film"></i></span>
-    <input type="range" id="demoSlider" min="0" max="<?= $total-1 ?>" step="1" value="0" oninput="gotoPhase(+this.value)">
-    <span id="phLbl" style="color:#ccc;font-size:.75rem;font-weight:600;min-width:100px;text-align:center"></span>
-    <button class="btn-g" id="btnAuto" onclick="toggleAuto()" style="font-size:.72rem;padding:.35rem .75rem;flex-shrink:0"><i class="fa-solid fa-circle-play"></i> Auto</button>
-    <button class="btn-g" onclick="closeDemo()" style="font-size:.72rem;padding:.35rem .75rem;flex-shrink:0"><i class="fa-solid fa-xmark"></i> Đóng</button>
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 const BASE   = '<?= APP_URL ?>';
 const KEYS   = <?= json_encode(array_column($components,'key')) ?>;
@@ -393,7 +331,6 @@ let approved = <?= json_encode((object)$approved) ?>;
 const CS = {};
 KEYS.forEach(function(k){ CS[k] = { b64:'', mime:'image/jpeg', url:'' }; });
 let activeCard = null; // for global paste listener
-let curPhase = 0, autoTimer = null;
 
 // ── Tab switching ─────────────────────────────────────────────────
 function sTab(key, tab) {
@@ -568,7 +505,6 @@ async function saveApproved(key, payload) {
     if (bgWrap) bgWrap.style.display = 'block';
     // reset state
     CS[key].b64 = ''; CS[key].url = '';
-    updateProg();
     toast('✓ Đã duyệt: '+LABELS[KEYS.indexOf(key)], 'ok');
   } catch(err) { toast('Lỗi: '+err.message, 'err'); }
 }
@@ -591,108 +527,6 @@ async function doSearch(key) {
     res.style.display = 'grid';
   } catch(err) { ld.style.display='none'; toast('Lỗi kết nối', 'err'); }
 }
-
-// ── Progress ──────────────────────────────────────────────────────
-function updateProg() {
-  var n   = KEYS.filter(function(k){ return approved[k]&&approved[k].url; }).length;
-  var pct = Math.round(n/KEYS.length*100);
-  document.getElementById('jsCount').textContent = n;
-  document.getElementById('jsProg').style.width  = pct+'%';
-  document.getElementById('jsPct').textContent   = pct+'%';
-  var ok = n > 0;
-  document.getElementById('btnDemo').disabled   = !ok;
-  document.getElementById('btnDeploy').disabled = !ok;
-}
-
-// ── Deploy ────────────────────────────────────────────────────────
-async function deployHome() {
-  if (!confirm('Áp dụng GSAP animation vào trang chủ?\nBản cũ sẽ được lưu backup tự động.')) return;
-  var st = document.getElementById('depStatus');
-  st.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang triển khai...'; st.style.color='#888';
-  try {
-    var r = await fetch(BASE+'/api/admin/deploy-homepage', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({assets: approved})
-    });
-    var d = await r.json();
-    if (d.ok) {
-      st.innerHTML = '<i class="fa-solid fa-circle-check"></i> Trang chủ đã được cập nhật!'; st.style.color='#22c55e';
-      document.getElementById('btnRollback').style.display = 'inline-flex';
-      toast('🚀 Trang chủ đã được cập nhật!', 'ok');
-    } else {
-      st.innerHTML = d.message||'Lỗi'; st.style.color='#ef4444';
-      toast(d.message||'Lỗi triển khai', 'err');
-    }
-  } catch(err) { st.innerHTML='Lỗi kết nối'; st.style.color='#ef4444'; toast('Lỗi kết nối','err'); }
-}
-
-// ── Rollback ──────────────────────────────────────────────────────
-async function rollbackHome() {
-  if (!confirm('Khôi phục trang chủ về phiên bản cũ?')) return;
-  try {
-    var r = await fetch(BASE+'/api/admin/rollback-homepage',{method:'POST'});
-    var d = await r.json();
-    toast(d.ok ? '✓ Đã khôi phục trang chủ cũ' : (d.message||'Lỗi'), d.ok?'ok':'err');
-    if (d.ok) document.getElementById('btnRollback').style.display='none';
-  } catch(err){ toast('Lỗi kết nối','err'); }
-}
-
-// ── Demo ──────────────────────────────────────────────────────────
-function openDemo() {
-  buildPhases();
-  document.getElementById('demoOvl').classList.add('show');
-  gotoPhase(0);
-}
-function closeDemo() {
-  document.getElementById('demoOvl').classList.remove('show');
-  if (autoTimer){ clearInterval(autoTimer); autoTimer=null; resetAutoBtn(); }
-}
-function buildPhases() {
-  var canvas = document.getElementById('demoCanvas');
-  canvas.innerHTML = '';
-  KEYS.forEach(function(key,i){
-    var url = (approved[key]||{}).url || '';
-    var div = document.createElement('div');
-    div.className='d-phase'; div.id='ph-'+i;
-    var dots = KEYS.map(function(_,j){ return '<div class="ph-dot'+(j===i?' on':'')+'" onclick="gotoPhase('+j+')"></div>'; }).join('');
-    div.innerHTML =
-      '<div class="d-bg" style="background-image:url(\''+url+'\')"></div>'+
-      '<div class="d-fog"></div>'+
-      '<div class="d-cnt">'+
-        '<div style="font-size:.63rem;color:rgba(227,0,0,.85);letter-spacing:3px;font-weight:700;text-transform:uppercase;margin-bottom:.55rem" class="d-tag">ASSET '+(i+1)+' / '+KEYS.length+'</div>'+
-        '<h2 class="d-ttl">'+LABELS[i]+'</h2>'+
-        '<div class="d-sub" style="font-size:.78rem;margin-bottom:1rem;color:'+(url?'rgba(255,255,255,.45)':'rgba(255,255,255,.2)')+'">'+
-          (url ? ('✓ Đã duyệt — '+(approved[key].filename||'')) : '— Chưa có ảnh —')+
-        '</div>'+
-        (url ? '<div style="width:min(340px,80vw);height:170px;border-radius:10px;overflow:hidden;margin:0 auto .8rem;border:1px solid rgba(255,255,255,.1)"><img src="'+url+'" style="width:100%;height:100%;object-fit:cover"></div>' : '')+
-        '<div class="ph-dots">'+dots+'</div>'+
-      '</div>';
-    canvas.appendChild(div);
-  });
-}
-function gotoPhase(idx) {
-  document.querySelectorAll('.d-phase').forEach(function(p,i){
-    var active = i===idx;
-    p.classList.toggle('cur',active);
-    if(active && typeof gsap!=='undefined'){
-      gsap.fromTo(p,{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.65,ease:'power2.out'});
-      gsap.fromTo(p.querySelector('.d-bg'),{scale:1.12},{scale:1,duration:1.1,ease:'power2.out'});
-      var els = p.querySelectorAll('.d-tag,.d-ttl,.d-sub,.d-img-prev,.ph-dots');
-      gsap.fromTo(els,{opacity:0,y:28},{opacity:1,y:0,duration:.55,stagger:.08,ease:'power3.out',delay:.15});
-    }
-  });
-  curPhase=idx;
-  document.getElementById('demoSlider').value=idx;
-  document.getElementById('phLbl').textContent=LABELS[idx]||'';
-  document.querySelectorAll('.ph-dot').forEach(function(d,i){ d.classList.toggle('on', i%KEYS.length===idx); });
-}
-function toggleAuto(){
-  if(autoTimer){ clearInterval(autoTimer); autoTimer=null; resetAutoBtn(); return; }
-  document.getElementById('btnAuto').innerHTML='<i class="fa-solid fa-circle-pause"></i> Dừng';
-  autoTimer=setInterval(function(){ gotoPhase((curPhase+1)%KEYS.length); }, 2800);
-}
-function resetAutoBtn(){ document.getElementById('btnAuto').innerHTML='<i class="fa-solid fa-circle-play"></i> Auto'; }
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDemo(); });
 
 // ── Product name autocomplete ─────────────────────────────────────
 var _sugTimer = {};

@@ -1158,7 +1158,6 @@ class AdminController {
         foreach ($approved as &$_a) {
             if (!empty($_a['filename'])) $_a['url'] = APP_URL . '/assets/images/' . $_a['filename'];
         } unset($_a);
-        $hasBackup = file_exists(__DIR__ . '/../Views/home/index.php.bak');
         $bannersFile = __DIR__ . '/../../storage/banners.json';
         $banners     = file_exists($bannersFile) ? (json_decode(file_get_contents($bannersFile), true) ?: []) : [];
         $pageTitle = 'Asset Manager';
