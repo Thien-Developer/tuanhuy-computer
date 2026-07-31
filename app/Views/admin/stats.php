@@ -221,6 +221,7 @@ foreach ($topProducts as $tp) {
     $topProdRevMil[] = round($tp['rev'] / 1000000, 2);
 }
 ?>
+document.addEventListener('DOMContentLoaded', function(){
 var _chartDefaults = {
   tooltip: { backgroundColor:'#1a1a1a', borderColor:'#2a2a2a', borderWidth:1, titleColor:'#888', bodyColor:'#ddd', padding:10 },
   legend:  { labels: { color:'#555', font:{ size:10 }, boxWidth:10, padding:10 } }
@@ -377,6 +378,7 @@ var _chartDefaults = {
 document.querySelectorAll('.st-mbar').forEach(function(b){
   var w = b.style.width; b.style.width='0';
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ b.style.width=w; }); });
+});
 });
 </script>
 <?php require_once __DIR__.'./layout_bottom.php'; ?>

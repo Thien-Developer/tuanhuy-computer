@@ -195,6 +195,7 @@ $revData = array_fill(0, 12, 0);
 foreach ($stats['monthly_chart'] as $r) $revData[$r['m']-1] = round($r['rev']/1000000, 1);
 $tooltipDefaults = "{backgroundColor:'#1a1a1a',borderColor:'#333',borderWidth:1,titleColor:'#888',bodyColor:'#ddd'}";
 ?>
+document.addEventListener('DOMContentLoaded', function(){
 // 12-month bar chart
 (function(){
   var ctx=document.getElementById('revenueChart');
@@ -288,5 +289,6 @@ if (btnConfirm) {
       .catch(function(){ btnConfirm.disabled=false; });
   });
 }
+});
 </script>
 <?php require_once __DIR__.'./layout_bottom.php'; ?>
