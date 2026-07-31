@@ -3,6 +3,7 @@ require_once __DIR__.'/../Models/Models.php';
 require_once __DIR__.'/../Models/ProductModel.php';
 require_once __DIR__.'/../Middleware/RoleGuard.php';
 require_once __DIR__.'/../Helpers/Logger.php';
+require_once __DIR__.'/../Helpers/ImageOptimizer.php';
 
 class AdminController {
 
@@ -1082,7 +1083,10 @@ class AdminController {
             if ($f['size'] > 5 * 1024 * 1024) return null;
             $name = uniqid('prod_') . '.' . $ext;
             if (!is_dir(UPLOAD_PATH)) mkdir(UPLOAD_PATH, 0755, true);
-            if (move_uploaded_file($f['tmp_name'], UPLOAD_PATH . $name)) return $name;
+            if (move_uploaded_file($f['tmp_name'], UPLOAD_PATH . $name)) {
+                ImageOptimizer::resize(UPLOAD_PATH . $name);
+                return $name;
+            }
         }
         if (!empty($_POST['image_presaved'])) {
             $fname = basename($_POST['image_presaved']);
@@ -1099,7 +1103,10 @@ class AdminController {
             $ext  = $extM[$mime] ?? 'jpg';
             $name = uniqid('prod_paste_') . '.' . $ext;
             if (!is_dir(UPLOAD_PATH)) mkdir(UPLOAD_PATH, 0755, true);
-            if (file_put_contents(UPLOAD_PATH . $name, $dec)) return $name;
+            if (file_put_contents(UPLOAD_PATH . $name, $dec)) {
+                ImageOptimizer::resize(UPLOAD_PATH . $name);
+                return $name;
+            }
         }
         return null;
     }
@@ -1115,8 +1122,10 @@ class AdminController {
             if (!in_array($ext, ['jpg','jpeg','png','webp','gif'])) continue;
             if ($files['size'][$i] > 5 * 1024 * 1024) continue;
             $fname = 'prod_extra_' . uniqid() . '.' . $ext;
-            if (move_uploaded_file($files['tmp_name'][$i], UPLOAD_PATH . $fname))
+            if (move_uploaded_file($files['tmp_name'][$i], UPLOAD_PATH . $fname)) {
+                ImageOptimizer::resize(UPLOAD_PATH . $fname);
                 $pm->addImage($productId, $fname, $i);
+            }
         }
     }
 
@@ -1141,9 +1150,34 @@ class AdminController {
             $extM = ['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp','image/gif'=>'gif'];
             $ext  = $extM[$mime] ?? 'jpg';
             $fname = 'prod_extra_' . uniqid() . '.' . $ext;
-            if (file_put_contents(UPLOAD_PATH . $fname, $dec))
+            if (file_put_contents(UPLOAD_PATH . $fname, $dec)) {
+                ImageOptimizer::resize(UPLOAD_PATH . $fname);
                 $pm->addImage($productId, $fname, (int)$i);
+            }
         }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // One-time cleanup: resize oversized existing product uploads
+    // ─────────────────────────────────────────────────────────────────
+    public function optimizeUploads($p = null): void {
+        $this->checkAdmin();
+        set_time_limit(180);
+        $files = glob(UPLOAD_PATH . '*.{jpg,jpeg,png,webp,gif}', GLOB_BRACE) ?: [];
+        $before = 0; $after = 0; $resized = 0;
+        foreach ($files as $f) {
+            if (!is_file($f)) continue;
+            $sizeBefore = filesize($f);
+            $before += $sizeBefore;
+            if (ImageOptimizer::resize($f)) {
+                clearstatcache(true, $f);
+                $resized++;
+            }
+            $after += filesize($f);
+        }
+        $pageTitle = 'Dọn ảnh sản phẩm';
+        $total     = count($files);
+        include __DIR__ . '/../Views/admin/optimize_uploads.php';
     }
 
     // ─────────────────────────────────────────────────────────────────
@@ -1199,6 +1233,7 @@ class AdminController {
             if (!move_uploaded_file($f['tmp_name'], $bannerDir . $filename)) {
                 echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
             }
+            ImageOptimizer::resize($bannerDir . $filename, 1920);
             $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
         } elseif (!empty($_POST['image_b64'])) {
             $mime  = $_POST['image_mime'] ?? 'image/jpeg';
@@ -1208,6 +1243,7 @@ class AdminController {
             if (file_put_contents($bannerDir . $filename, $data) === false) {
                 echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
             }
+            ImageOptimizer::resize($bannerDir . $filename, 1920);
             $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
         } elseif (!empty($_POST['url'])) {
             $data = @file_get_contents($_POST['url']);
@@ -1216,6 +1252,7 @@ class AdminController {
                 if (file_put_contents($bannerDir . $filename, $data) === false) {
                     echo json_encode(['ok'=>false,'message'=>'Không ghi được ảnh banner — path: '.$bannerDir.$filename.' writable:'.(is_writable($bannerDir)?'yes':'no')]); exit;
                 }
+                ImageOptimizer::resize($bannerDir . $filename, 1920);
                 $savedUrl = APP_URL . '/assets/images/banners/' . $filename . '?t=' . time();
             } else { $savedUrl = $_POST['url']; }
         } else {

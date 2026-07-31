@@ -2,6 +2,7 @@
 require_once __DIR__.'/../Models/Models.php';
 require_once __DIR__.'/../Models/ProductModel.php';
 require_once __DIR__.'/../Helpers/Logger.php';
+require_once __DIR__.'/../Helpers/ImageOptimizer.php';
 
 class ApiController {
 
@@ -215,6 +216,7 @@ class ApiController {
                     $ext   = $extMap[$imgMime] ?? 'jpg';
                     $fname = 'ai_'.uniqid().'.'.$ext;
                     file_put_contents(UPLOAD_PATH.$fname, $decoded);
+                    ImageOptimizer::resize(UPLOAD_PATH.$fname);
                     echo json_encode(array('success'=>true,'filename'=>$fname,'url'=>UPLOAD_URL.$fname)); return;
                 }
 
@@ -248,6 +250,7 @@ class ApiController {
                     }
                     $fname = 'ai_'.uniqid().'.'.$ext;
                     file_put_contents(UPLOAD_PATH.$fname, $data);
+                    ImageOptimizer::resize(UPLOAD_PATH.$fname);
                     echo json_encode(array('success'=>true,'filename'=>$fname,'url'=>UPLOAD_URL.$fname)); return;
                 }
 
@@ -673,16 +676,19 @@ class ApiController {
                     imagedestroy($fg);
                     imagejpeg($bg, $newPath, 92);
                     imagedestroy($bg);
+                    ImageOptimizer::resize($newPath);
                 } else {
                     // GD không đọc được → lưu PNG thô
                     $newFname = 'nobg_'.uniqid().'.png';
                     $newPath  = UPLOAD_PATH.$newFname;
                     file_put_contents($newPath, $resp);
+                    ImageOptimizer::resize($newPath);
                 }
             } else {
                 $newFname = 'nobg_'.uniqid().'.png';
                 $newPath  = UPLOAD_PATH.$newFname;
                 file_put_contents($newPath, $resp);
+                ImageOptimizer::resize($newPath);
             }
 
             $logPid = (int)($b['product_id'] ?? 0);
@@ -832,6 +838,7 @@ class ApiController {
             if ($ext === 'png') { imagesavealpha($img, true); imagepng($img, $newPath); }
             else                imagejpeg($img, $newPath, 92);
             imagedestroy($img);
+            ImageOptimizer::resize($newPath);
 
             $logPid = (int)($b['product_id'] ?? 0);
             Logger::logActivity('Gắn logo', 'products', $logPid ?: null, array_filter([
@@ -890,6 +897,7 @@ class ApiController {
                 if ($files['size'][$i] > 5 * 1024 * 1024) continue;
                 $fname = 'prod_extra_'.uniqid().'.'.$ext;
                 if (move_uploaded_file($files['tmp_name'][$i], UPLOAD_PATH.$fname)) {
+                    ImageOptimizer::resize(UPLOAD_PATH.$fname);
                     $pm->addImage($pid, $fname, $i);
                     $saved++;
                 }

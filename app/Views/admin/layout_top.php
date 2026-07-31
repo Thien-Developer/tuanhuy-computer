@@ -137,6 +137,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0f0f0f;color:#ddd}
     <?php if(isAdmin()): ?>
     <a href="<?= APP_URL ?>/admin/logs" class="nav-item <?= strpos($curUri,'/admin/logs')!==false?'active':'' ?>"><i class="fa-solid fa-clock-rotate-left" style="width:15px;text-align:center"></i>Nhật ký</a>
     <a href="<?= APP_URL ?>/admin/assets" class="nav-item <?= strpos($curUri,'/admin/assets')!==false?'active':'' ?>"><i class="fa-solid fa-photo-film" style="width:15px;text-align:center"></i>Asset Manager</a>
+    <a href="<?= APP_URL ?>/admin/optimize-uploads" class="nav-item <?= strpos($curUri,'/admin/optimize-uploads')!==false?'active':'' ?>"><i class="fa-solid fa-broom" style="width:15px;text-align:center"></i>Dọn ảnh sản phẩm</a>
     <?php endif; ?>
     <a href="<?= APP_URL ?>/" target="_blank" class="nav-item"><i class="fas fa-external-link-alt" style="width:15px;text-align:center"></i>Xem website</a>
     <a href="<?= APP_URL ?>/auth/logout" class="nav-item" style="color:#ef4444" onclick="return confirm('Đăng xuất?')"><i class="fas fa-sign-out-alt" style="width:15px;text-align:center"></i>Đăng xuất</a>
@@ -239,7 +240,7 @@ body{font-family:'Be Vietnam Pro',sans-serif;background:#0f0f0f;color:#ddd}
     if(Notification.permission==='granted'){
       new Notification('🛍️ Đơn hàng mới',{
         body: (o.product_name||o.order_code||'')+'  —  '+o.fullname+' ('+fmtVND(o.total)+')',
-        icon: APP_URL+'/assets/images/hero-banner.jpg'
+        icon: APP_URL+'/assets/images/hero-banner.png'
       });
     }
   }

@@ -7,7 +7,7 @@
 <?php
   $_metaTitle = (isset($pageTitle) ? sanitize($pageTitle).' | ' : '').'Tuấn Huy Computer';
   $_metaDesc  = isset($metaDesc)  ? sanitize($metaDesc)  : 'Tuấn Huy Computer — Chuyên gaming PC, laptop, linh kiện máy tính chính hãng. Bảo hành chính hãng, giao hàng toàn quốc.';
-  $_metaImg   = isset($metaImage) ? $metaImage           : APP_URL.'/assets/images/hero-banner.jpg';
+  $_metaImg   = isset($metaImage) ? $metaImage           : APP_URL.'/assets/images/hero-banner.png';
   $_metaUrl   = (isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']==='on'?'https':'http').'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 ?>
 <meta name="description" content="<?= $_metaDesc ?>">

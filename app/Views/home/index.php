@@ -11,9 +11,9 @@ $_bjMain = !empty($_bj['main']) ? $_bj['main'] : array();
 $_bjSide = !empty($_bj['side']) ? $_bj['side'] : array();
 // Slide defaults (banners.json → approved.json → local files)
 $_defSlides = array(
-    array('img'=>_assetUrl($_approved,'hero-banner')?:APP_URL.'/assets/images/hero-banner.png','label'=>'HOT DEAL','title'=>'PC Gaming RTX 4090<br>Sức mạnh vô giới hạn','cta'=>'Mua ngay','url'=>APP_URL.'/products/may-tinh-pc'),
-    array('img'=>_assetUrl($_approved,'gaming-pc')  ?:APP_URL.'/assets/images/gaming-pc.jpg',  'label'=>'BÁN CHẠY','title'=>'Cấu hình gaming<br>Giá tốt nhất thị trường','cta'=>'Khám phá','url'=>APP_URL.'/products/may-tinh-pc'),
-    array('img'=>_assetUrl($_approved,'laptop')     ?:APP_URL.'/assets/images/laptop.png',      'label'=>'MỚI VỀ', 'title'=>'Laptop mỏng nhẹ<br>Hiệu năng vượt trội',    'cta'=>'Xem ngay','url'=>APP_URL.'/products/laptop'),
+    array('img'=>_assetUrl($_approved,'hero-banner')?:APP_URL.'/assets/images/hero-banner.webp','label'=>'HOT DEAL','title'=>'PC Gaming RTX 4090<br>Sức mạnh vô giới hạn','cta'=>'Mua ngay','url'=>APP_URL.'/products/may-tinh-pc'),
+    array('img'=>_assetUrl($_approved,'gaming-pc')  ?:APP_URL.'/assets/images/gaming-pc.webp',  'label'=>'BÁN CHẠY','title'=>'Cấu hình gaming<br>Giá tốt nhất thị trường','cta'=>'Khám phá','url'=>APP_URL.'/products/may-tinh-pc'),
+    array('img'=>_assetUrl($_approved,'laptop')     ?:APP_URL.'/assets/images/laptop.webp',      'label'=>'MỚI VỀ', 'title'=>'Laptop mỏng nhẹ<br>Hiệu năng vượt trội',    'cta'=>'Xem ngay','url'=>APP_URL.'/products/laptop'),
 );
 $_slides = array();
 foreach(array(0,1,2) as $_si){
@@ -28,8 +28,8 @@ foreach(array(0,1,2) as $_si){
 }
 // Side banner defaults
 $_defSide = array(
-    array('img'=>APP_URL.'/assets/images/monitor.png','label'=>'Màn hình','title'=>'Gaming 4K<br>144Hz+',             'url'=>APP_URL.'/products/man-hinh'),
-    array('img'=>APP_URL.'/assets/images/mouse.png',  'label'=>'Phụ kiện', 'title'=>'Bàn phím<br>Cơ Gaming','url'=>APP_URL.'/products/chuot'),
+    array('img'=>APP_URL.'/assets/images/monitor.webp','label'=>'Màn hình','title'=>'Gaming 4K<br>144Hz+',             'url'=>APP_URL.'/products/man-hinh'),
+    array('img'=>APP_URL.'/assets/images/mouse.webp',  'label'=>'Phụ kiện', 'title'=>'Bàn phím<br>Cơ Gaming','url'=>APP_URL.'/products/chuot'),
 );
 $_sideBans = array();
 foreach(array(0,1) as $_si){
