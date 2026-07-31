@@ -17,3 +17,5 @@ jobs:
           script: |
             cd /var/www/html
             git pull origin main
+            mkdir -p storage uploads/products
+            chmod -R 777 storage uploads/products
