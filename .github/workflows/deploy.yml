@@ -18,7 +18,7 @@ jobs:
             cd /var/www/html
             git pull origin main
             mkdir -p storage uploads/products
-            chmod -R 777 storage uploads/products
-            chmod 777 app/Views/home
+            chmod -R 777 storage uploads/products 2>/dev/null || true
+            chmod 777 app/Views/home 2>/dev/null || true
             chmod 666 app/Views/home/index.php app/Views/home/index.php.bak 2>/dev/null || true
-            chmod -R 777 assets/images
+            chmod -R 777 assets/images 2>/dev/null || true
