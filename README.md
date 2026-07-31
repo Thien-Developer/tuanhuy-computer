@@ -141,7 +141,7 @@ TELEGRAM_ADMIN_CHAT=7329986368
 
 | Role | Email | Mật khẩu |
 |---|---|---|
-| Admin | admin@tuanhuycomputer.com | `admin123` |
+| 1 | `ad@gmail.com` | 111
 
 > **Quan trọng:** Đổi mật khẩu ngay sau khi cài đặt/deploy lần đầu tại `/admin/staff`.
 
